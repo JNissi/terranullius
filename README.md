@@ -1,4 +1,4 @@
-terranullius
+Terra Nullius
 ============
 
 The settlers clone.
