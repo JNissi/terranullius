@@ -13,6 +13,7 @@
 	setView = function setView() {
 		var w = window.innerWidth,
 			h = window.innerHeight;
+		console.log('Setting to:' + w + 'x' + h);
 		camera.aspect = w / h;
 		renderer.setSize(w, h);
 	};
@@ -40,7 +41,7 @@
 		renderer = new three.WebGLRenderer();
 		setView();
 		dom = renderer.domElement;
-		dom.onresize = setView();
+		window.onresize = setView;
 		document.body.appendChild(renderer.domElement);
 		cb();
 	};
