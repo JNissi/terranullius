@@ -20,14 +20,16 @@
 
 	init = function init(cb) {
 		var three = THREE,
-			dom;
+			dom,
+			w = window.innerWidth,
+			h = window.innerHeight;
 
 		document.onselectstart = function onselectstart() {
 			return false;
 		};
 
 		scene = new three.Scene();
-		camera = new three.PerspectiveCamera(75, 1, 1, 10000);
+		camera = new three.PerspectiveCamera(75, 1, w / h, 10000);
 		camera.position.z = 1000;
 		scene.add(camera);
 
@@ -42,7 +44,10 @@
 		setView();
 		dom = renderer.domElement;
 		window.onresize = setView;
-		document.body.appendChild(renderer.domElement);
+		document
+			.getElementById('main-container')
+			.appendChild(renderer.domElement);
+		renderer.domElement.id = 'mainview';
 		cb();
 	};
 
