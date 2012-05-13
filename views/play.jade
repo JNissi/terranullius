@@ -8,18 +8,34 @@
 			.icon
 		.button.system
 			.icon
-	.window.buildings
-		.button.buildings
-			.icon
-		.button.storage
-			.icon
-		.button.statistics
-			.icon
-		.button.system
-			.icon
-	.window.storage
-	.window.statistics
-	.window.system
+	.window.buildings(title="Buildings")
+		ul
+			li
+				a.small-buildings(href="#small-buildings")
+			li
+				a.medium-buildings(href="#medium-buildings")
+			li
+				a.large-buildings(href="#large-buildings")	
+		.tab#small-buildings
+			.button.forester
+				.icon
+			.button.woodcutter
+				.icon
+			.button.stonemason
+				.icon
+			.button.fisher
+				.icon
+			.button.well
+				.icon
+		.tab#medium-buildings
+			.button.sawmill
+				.icon
+		.tab#large-buildings
+			.button.farm
+				.icon
+	.window.storage(title="Storage")
+	.window.statistics(title="Statistics")
+	.window.system(title="System")
 script(src='/javascripts/ThreeWebGL.js')
 script(src='/javascripts/ThreeExtras.js')
 script(src='/javascripts/terranullius.js')

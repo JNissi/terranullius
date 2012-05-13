@@ -8,13 +8,14 @@
 	$('.window').dialog({
 		autoOpen: false
 	});
+	$('.window.buildings').tabs();
 
 	toggleWindow = function toggleWindow(e) {
 			var $win = $('.window.' + e.data.wclass);
 			if ($win.dialog('isOpen')) {
 				$win.dialog('close');
 			} else {
-				$('.window.buildings').dialog('open');
+				$win.dialog('open');
 			}		
 	};
 	(function initButtons() {
