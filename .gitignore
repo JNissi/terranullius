@@ -15,3 +15,5 @@ results
 node_modules
 npm-debug.log
 public/stylesheets/style.css
+.idea/.name
+.idea/workspace.xml
