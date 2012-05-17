@@ -13,20 +13,23 @@
 	setView = function setView() {
 		var w = window.innerWidth,
 			h = window.innerHeight;
+		console.log('Setting to:' + w + 'x' + h);
 		camera.aspect = w / h;
 		renderer.setSize(w, h);
 	};
 
 	init = function init(cb) {
 		var three = THREE,
-			dom;
+			dom,
+			w = window.innerWidth,
+			h = window.innerHeight;
 
 		document.onselectstart = function onselectstart() {
 			return false;
 		};
 
 		scene = new three.Scene();
-		camera = new three.PerspectiveCamera(75, 1, 1, 10000);
+		camera = new three.PerspectiveCamera(75, 1, w / h, 10000);
 		camera.position.z = 1000;
 		scene.add(camera);
 
@@ -40,8 +43,11 @@
 		renderer = new three.WebGLRenderer();
 		setView();
 		dom = renderer.domElement;
-		dom.onresize = setView();
-		document.body.appendChild(renderer.domElement);
+		window.onresize = setView;
+		document
+			.getElementById('main-container')
+			.appendChild(renderer.domElement);
+		renderer.domElement.id = 'mainview';
 		cb();
 	};
 

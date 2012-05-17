@@ -1,0 +1,44 @@
+#main-container
+	.panel#mainpanel
+		.button.buildings
+			.icon
+		.button.storage
+			.icon
+		.button.statistics
+			.icon
+		.button.system
+			.icon
+	.window.buildings(title="Buildings")
+		ul
+			li
+				a.small-buildings(href="#small-buildings")
+			li
+				a.medium-buildings(href="#medium-buildings")
+			li
+				a.large-buildings(href="#large-buildings")
+		.tab#small-buildings
+			.button.forester
+				.icon
+			.button.woodcutter
+				.icon
+			.button.stonemason
+				.icon
+			.button.fisher
+				.icon
+			.button.well
+				.icon
+		.tab#medium-buildings
+			.button.sawmill
+				.icon
+		.tab#large-buildings
+			.button.farm
+				.icon
+	.window.storage(title="Storage")
+	.window.statistics(title="Statistics")
+	.window.system(title="System")
+script(src='/javascripts/ThreeWebGL.js')
+script(src='/javascripts/ThreeExtras.js')
+script(src='/javascripts/terranullius.js')
+script(src='/javascripts/jquery-1.7.2.min.js')
+script(src='/javascripts/jquery-ui-1.8.20.custom.min.js')
+script(src='/javascripts/userInterface.js')
