@@ -4,7 +4,9 @@
   , "private": true
   , "dependencies": {
       "express": "2.5.8"
-    , "stylus": ">= 0.0.1"
+    , "stylus": "0.30.x"
     , "jade": ">= 0.0.1"
+		, "node-sprite": "0.1.x"
+		, "sprintf": "0.x"
   }
 }
