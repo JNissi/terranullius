@@ -5,11 +5,53 @@
 		geometry,
 		material,
 		mesh,
+		windmill,
+		rotor,
+		building,
 		setView,
 		init,
 		animate,
 		render,
-		initMouseControls;
+		initMouseControls,
+		Windmill,
+		rotorAngle = new THREE.Vector3(0, 0, 0);
+
+	Windmill = function Windmill(cb) {
+		var three = THREE,
+			loader = new three.SceneLoader(true),
+			self = this;
+		this.rotor = null;
+		this.building = null;
+		this.door = null;
+		this.object3d = new three.Object3D();
+
+		loader.load(
+			'/objects/windmill.js',
+			function onWindmillLoad(data) {
+				var model;
+				if (data) {
+					model = data.scene;
+					console.dir(model);
+					self.object3d.add(model);
+					model.traverse(function onTraverse(o) {
+							switch (o.name) {
+								case 'building':
+									self.building = o;
+									break;
+								case 'rotor':
+									self.rotor = o;
+									o.material.side = three.DoubleSide;
+									break;
+								case 'door':
+									self.door = o;
+							}
+						});
+					cb(self);
+				}
+			}
+		);
+	};
+
 
 	setView = function setView() {
 		var w = window.innerWidth,
@@ -31,17 +73,16 @@
 		};
 
 		scene = new three.Scene();
-		camera = new three.PerspectiveCamera(75, 1, w / h, 10000);
-		camera.position.z = 10;
+		camera = new three.PerspectiveCamera(75, w / h, 1, 10000);
+		camera.position.z = 25;
+		camera.position.y = 25;
+		camera.position.x = 25;
+		camera.lookAt(new three.Vector3(0, 0, 0));
 		scene.add(camera);
-		scene.add(new three.AmbientLight(0xffffff));
+		scene.add(new three.AmbientLight(0xababab));
 		var pointLight = new three.PointLight(0xff4400, 5, 30);
 		pointLight.position.set(5, 0, 0);
-
-		material = new three.MeshBasicMaterial({
-			color: 0xff0000,
-			wireframe: false
-		});
+		scene.add(pointLight);
 		renderer = new three.WebGLRenderer();
 		setView();
 		dom = renderer.domElement;
@@ -50,21 +91,14 @@
 			.getElementById('main-container')
 			.appendChild(renderer.domElement);
 		renderer.domElement.id = 'mainview';
-		loader.load(
-			'/objects/ekatesti.js',
-			function onGeometry(geometry, materials) {
-				console.dir(materials);
-				var material = materials[0];
-//				material.morphTargets = true;
-				material.color.setHex(0xffaaaa);
-				material.ambient.setHex(0xefefef);
-				mesh = new three.Mesh(geometry, new three.MeshFaceMaterial(materials));
-				mesh.position.set(0, 0, 0);
-				scene.add(mesh);
-				initMouseControls();
-				cb();
-			}
-		);
+		new Windmill(function onWindmillLoad(wm) {
+			scene.add(wm.object3d);
+			rotor = wm.rotor;
+			building = wm.building;
+			windmill = wm.object3d;
+			initMouseControls();
+			cb();
+		});
 	};
 
 	initMouseControls = function initMouseControls() {
@@ -84,8 +118,8 @@
 	})(requestAnimationFrame);
 
 	render = function render() {
-		mesh.rotation.x += 0.01;
-		mesh.rotation.y += 0.02;
+		rotor.rotation.y += 0.01;
+		rotor.quaternion.setFromEuler(rotor.rotation);
 		renderer.render(scene, camera);
 	};
 
