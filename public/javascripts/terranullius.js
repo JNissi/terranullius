@@ -1,5 +1,7 @@
 (function initTerraNullius(THREE) {
 	var camera,
+		clock,
+		controls,
 		scene,
 		renderer,
 		geometry,
@@ -7,6 +9,8 @@
 		mesh,
 		windmill,
 		rotor,
+		door,
+		doorDir = 0.04,
 		building,
 		setView,
 		init,
@@ -41,6 +45,7 @@
 								case 'rotor':
 									self.rotor = o;
 									o.material.side = three.DoubleSide;
+									o.material.transparent = true;
 									break;
 								case 'door':
 									self.door = o;
@@ -66,19 +71,23 @@
 			dom,
 			w = window.innerWidth,
 			h = window.innerHeight,
-			loader = new three.JSONLoader(true);
+			loader = new three.JSONLoader(true),
+			dummy;
 
 		document.onselectstart = function onselectstart() {
 			return false;
 		};
 
 		scene = new three.Scene();
+		dummy = new three.Object3D();
+		dummy.position.set(0, 0, 0);
 		camera = new three.PerspectiveCamera(75, w / h, 1, 10000);
-		camera.position.z = 25;
-		camera.position.y = 25;
-		camera.position.x = 25;
+		camera.position.set(0, 12, 12);
 		camera.lookAt(new three.Vector3(0, 0, 0));
-		scene.add(camera);
+		dummy.add(camera);
+		scene.add(dummy);
+		controls = new three.RTSControls(dummy);
+
 		scene.add(new three.AmbientLight(0xababab));
 		var pointLight = new three.PointLight(0xff4400, 5, 30);
 		pointLight.position.set(5, 0, 0);
@@ -96,22 +105,47 @@
 			rotor = wm.rotor;
 			building = wm.building;
 			windmill = wm.object3d;
-			initMouseControls();
+			door = wm.door;
+			//initMouseControls();
 			cb();
 		});
 	};
 
-	initMouseControls = function initMouseControls() {
+/*	initMouseControls = function initMouseControls() {
 		var mainview = document.getElementById('mainview'),
 			scrollListener = function scrollListener(e) {
 				var delta = Math.max(-1, Math.min(1, e.wheelDelta));
-				camera.position.z += delta * 10;
+				camera.position.z += delta * 2;
 			};
 		mainview.addEventListener('mousewheel', scrollListener, false);
-	};
+	};*/
 
 	(function initAnimate(requestAnimationFrame) {
+		var openDoorTween,
+			closeDoorTween;
+		clock = new THREE.Clock();
+		openDoorTween = new TWEEN.Tween({z: 0})
+			.delay(1000)
+			.to({z: 1.6}, 2000)
+			.easing(TWEEN.Easing.Exponential.Out)
+			.onUpdate(function onOpenUpdate() {
+				door.rotation.z = this.z;
+			});
+		console.dir(openDoorTween);
+		closeDoorTween = new TWEEN.Tween({z: 1.6})
+			.to({z: 0}, 2000)
+			.easing(TWEEN.Easing.Bounce.Out)
+			.onUpdate(function onCloseUpdate() {
+				door.rotation.z = this.z;
+			});
+		openDoorTween.chain(openDoorTween);
+//		closeDoorTween.chain(openDoorTween);
+		openDoorTween.start();
+
 		animate = function animate() {
+			var delta = clock.getDelta();
+			controls.update(delta);
+			TWEEN.update();
 			render();
 			requestAnimationFrame(animate);
 		};
@@ -120,6 +154,7 @@
 	render = function render() {
 		rotor.rotation.y += 0.01;
 		rotor.quaternion.setFromEuler(rotor.rotation);
+		door.quaternion.setFromEuler(door.rotation);
 		renderer.render(scene, camera);
 	};
 
