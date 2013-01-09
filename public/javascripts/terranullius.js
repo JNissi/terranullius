@@ -4,21 +4,16 @@
 		controls,
 		scene,
 		renderer,
-		geometry,
-		material,
-		mesh,
 		windmill,
 		rotor,
 		door,
-		doorDir = 0.04,
 		building,
 		setView,
 		init,
 		animate,
 		render,
 		initMouseControls,
-		Windmill,
-		rotorAngle = new THREE.Vector3(0, 0, 0);
+		Windmill;
 
 	Windmill = function Windmill(cb) {
 		var three = THREE,
@@ -122,30 +117,29 @@
 
 	(function initAnimate(requestAnimationFrame) {
 		var openDoorTween,
-			closeDoorTween;
+			closeDoorTween,
+			rot = {z: 0};
 		clock = new THREE.Clock();
-		openDoorTween = new TWEEN.Tween({z: 0})
-			.delay(1000)
+		openDoorTween = new TWEEN.Tween(rot)
 			.to({z: 1.6}, 2000)
 			.easing(TWEEN.Easing.Exponential.Out)
 			.onUpdate(function onOpenUpdate() {
 				door.rotation.z = this.z;
 			});
-		console.dir(openDoorTween);
-		closeDoorTween = new TWEEN.Tween({z: 1.6})
+		closeDoorTween = new TWEEN.Tween(rot)
 			.to({z: 0}, 2000)
 			.easing(TWEEN.Easing.Bounce.Out)
 			.onUpdate(function onCloseUpdate() {
 				door.rotation.z = this.z;
 			});
-		openDoorTween.chain(openDoorTween);
-//		closeDoorTween.chain(openDoorTween);
-		openDoorTween.start();
+		openDoorTween.chain(closeDoorTween);
+		closeDoorTween.chain(openDoorTween);
+		openDoorTween.start(clock.getElapsedTime() * 1000);
 
 		animate = function animate() {
 			var delta = clock.getDelta();
 			controls.update(delta);
-			TWEEN.update();
+			TWEEN.update(clock.getElapsedTime() * 1000);
 			render();
 			requestAnimationFrame(animate);
 		};
