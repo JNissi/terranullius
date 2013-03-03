@@ -12,45 +12,7 @@
 		init,
 		animate,
 		render,
-		initMouseControls,
-		Windmill;
-
-	Windmill = function Windmill(cb) {
-		var three = THREE,
-			loader = new three.SceneLoader(true),
-			self = this;
-		this.rotor = null;
-		this.building = null;
-		this.door = null;
-		this.object3d = new three.Object3D();
-
-		loader.load(
-			'/objects/windmill.js',
-			function onWindmillLoad(data) {
-				var model;
-				if (data) {
-					model = data.scene;
-					console.dir(model);
-					self.object3d.add(model);
-					model.traverse(function onTraverse(o) {
-							switch (o.name) {
-								case 'building':
-									self.building = o;
-									break;
-								case 'rotor':
-									self.rotor = o;
-									o.material.side = three.DoubleSide;
-									o.material.transparent = true;
-									break;
-								case 'door':
-									self.door = o;
-							}
-						});
-					cb(self);
-				}
-			}
-		);
-	};
+		initMouseControls;
 
 
 	setView = function setView() {
@@ -77,7 +39,7 @@
 		dummy = new three.Object3D();
 		dummy.position.set(0, 0, 0);
 		camera = new three.PerspectiveCamera(75, w / h, 1, 10000);
-		camera.position.set(0, 12, 12);
+		camera.position.set(0, 62, 112);
 		camera.lookAt(new three.Vector3(0, 0, 0));
 		dummy.add(camera);
 		scene.add(dummy);
@@ -95,13 +57,17 @@
 			.getElementById('main-container')
 			.appendChild(renderer.domElement);
 		renderer.domElement.id = 'mainview';
-		new Windmill(function onWindmillLoad(wm) {
+		/*tn.windmill({}, function onWindmillLoad(wm) {
+			windmill = wm;
 			scene.add(wm.object3d);
-			rotor = wm.rotor;
-			building = wm.building;
-			windmill = wm.object3d;
-			door = wm.door;
 			//initMouseControls();
+			cb();
+		});*/
+
+		renderer.setClearColorHex(0x000000, 1);
+
+		tn.terrain({}, function onTerrainLoad(terrain) {
+			scene.add(terrain.object3d);
 			cb();
 		});
 	};
@@ -116,26 +82,7 @@
 	};*/
 
 	(function initAnimate(requestAnimationFrame) {
-		var openDoorTween,
-			closeDoorTween,
-			rot = {z: 0};
-		clock = new THREE.Clock();
-		openDoorTween = new TWEEN.Tween(rot)
-			.to({z: 1.6}, 2000)
-			.easing(TWEEN.Easing.Exponential.Out)
-			.onUpdate(function onOpenUpdate() {
-				door.rotation.z = this.z;
-			});
-		closeDoorTween = new TWEEN.Tween(rot)
-			.to({z: 0}, 2000)
-			.easing(TWEEN.Easing.Bounce.Out)
-			.onUpdate(function onCloseUpdate() {
-				door.rotation.z = this.z;
-			});
-		openDoorTween.chain(closeDoorTween);
-		closeDoorTween.chain(openDoorTween);
-		openDoorTween.start(clock.getElapsedTime() * 1000);
-
+		var clock = new THREE.Clock();
 		animate = function animate() {
 			var delta = clock.getDelta();
 			controls.update(delta);
@@ -146,9 +93,6 @@
 	})(requestAnimationFrame);
 
 	render = function render() {
-		rotor.rotation.y += 0.01;
-		rotor.quaternion.setFromEuler(rotor.rotation);
-		door.quaternion.setFromEuler(door.rotation);
 		renderer.render(scene, camera);
 	};
 

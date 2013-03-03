@@ -6,7 +6,7 @@ THREE.RTSControls = function RTSControls(object, domE) {
 		onMouseMove,
 		onKeyDown,
 		onKeyUp,
-		lastKnownMousePosition =
+		lastKnownMousePosition = 0,
 		mouseMove = false,
 		mouseRotate = false,
 		moveFactor = 50,
@@ -64,8 +64,12 @@ THREE.RTSControls = function RTSControls(object, domE) {
 				moveVector.z = 1;
 				break;
 			case 107: //plus
+				camera.position.y -= 10;
+				camera.position.z -= 10;
 				break;
 			case 109: //minus
+				camera.position.y += 10;
+				camera.position.z += 10;
 				break;
 		}
 	};
