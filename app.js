@@ -28,7 +28,7 @@ app.configure('production', function onProdConfigure() {
 // Routes
 
 app.get('/', routes.index);
-app.get('/play', routes.play);
+app.get('/account', routes.index);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

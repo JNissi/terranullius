@@ -1,0 +1,14 @@
+<div class="index">
+	<h1>Welcome to Terranullius!</h1>
+	<div google google-element-id="signinButton" ng-show="user.initDone">
+		<div class="login" ng-hide="user.loggedIn">
+			<span id="signinButton"></span>
+		</div>
+		<div class="go" ng-show="user.loggedIn">
+			<button ng-click="openAccountMenu()">
+				AccountSettings
+			</button>
+			<a href="/play">Go play</a>
+		</div>
+	</div>
+</div>

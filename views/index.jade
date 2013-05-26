@@ -1,11 +1,5 @@
 
-div(ng-app='terranullius')
-	h1 Welcome to #{title}
-	div(google='', google-element-id='signinButton', ng-show='user.initDone')
-		.login(ng-hide="user.loggedIn")
-			span#signinButton
-		.go(ng-show='user.loggedIn')
-			a(href='/play') go play
+div(ng-app='terranullius', ng-view='')
 
 //- script(src='/javascripts/primer.js')
 script(src='/javascripts/jquery-1.7.2.min.js')
