@@ -119,6 +119,8 @@
 		$routeProvider
 			.when('/', {templateUrl: 'partials/index.html', controller: 'IndexCtrl'})
 			.when('/account', {templateUrl: 'partials/account.html', controller: 'AccountCtrl'})
+			.when('/game', {templateUrl: 'partials/game.html', controller: 'GameSelectionCtrl'})
+			.when('/play', {templateUrl: 'partials/play.html', controller: 'GameCtrl'})
 			.otherwise({redirectTo: '/'});
 	}]);
 
@@ -126,6 +128,9 @@
 		.controller('IndexCtrl', function IndexCtrl($scope, $location) {
 			$scope.openAccountMenu = function openAccountMenu() {
 				$location.path('/account');
+			};
+			$scope.openGameSelection = function openGameSelection() {
+				$location.path('/game');
 			};
 		})
 		.controller('AccountCtrl', function AccountCtrl($location, $scope, User) {
@@ -193,11 +198,5 @@
 				});
 			}
 		}
-	});
-
-	terranullius.directive('jqdialog', function () {
-		return function linkJqdialog(scope, element, attributes) {
-			$(element).dialog();
-		};
 	});
 })();

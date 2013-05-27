@@ -1,11 +1,18 @@
+@font-face {
+	font-family: Antiqua
+	src: url(/fonts/ModernAntiqua.ttf)
+}
+
+*
+	font-family: Antiqua
 @import 'button'
 @import 'window'
 @import 'sprites'
+
+
 body
 	margin: 0
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-a
-	color: #00B7FF
+	font-size: 14pt
 
 #main-container
 	position:absolute;
@@ -29,3 +36,17 @@ canvas#mainview
 	margin-left: -64px
 	z-index: 1
 
+.mainmenu
+	text-align: center
+	.menubuttons
+		width: 250px
+		display: inline-block
+		button
+			display: block
+			width: 100%
+			height: 42pt
+			margin-bottom: 8pt
+			font-size: 16pt
+			color: #fff
+			background-color: #d80
+			border: 0

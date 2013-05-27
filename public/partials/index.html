@@ -1,14 +1,32 @@
-<div class="index">
+<div class="index mainmenu">
 	<h1>Welcome to Terranullius!</h1>
 	<div google google-element-id="signinButton" ng-show="user.initDone">
-		<div class="login" ng-hide="user.loggedIn">
+		<div class="login menubuttons" ng-hide="user.loggedIn">
 			<span id="signinButton"></span>
 		</div>
-		<div class="go" ng-show="user.loggedIn">
+		<div class="menubuttons" ng-show="user.loggedIn">
+			<button ng-click="openGameSelection()">
+				Games
+			</button>
 			<button ng-click="openAccountMenu()">
 				AccountSettings
 			</button>
-			<a href="/play">Go play</a>
+			<p>
+				<small>
+					The font is
+					<a href="http://openfontlibrary.org/en/font/modernantiqua">
+						Modern Antiqua Book
+					</a>
+					by
+					<a href="http://openfontlibrary.org/en/member/wmk69">
+						wmk69
+					</a>
+					--
+					<a href="http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web">
+						Font License
+					</a>
+				</small>
+			</p>
 		</div>
 	</div>
 </div>
