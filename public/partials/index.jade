@@ -1,0 +1,16 @@
+.index.mainmenu
+	h1 Welcome to Terranullius!
+	div(google-element-id='signinButton', ng-show='user.initDone', google)
+		.login.menubuttons(ng-hide='user.loggedIn')
+			span#signinButton
+		.menubuttons(ng-show='user.loggedIn')
+			button(ng-click='openGameSelection()') Games
+			button(ng-click='openAccountMenu()') AccountSettings
+			p
+				small
+					| The font is
+					a(href='http://openfontlibrary.org/en/font/modernantiqua') Modern Antiqua Book
+					| by
+					a(href='http://openfontlibrary.org/en/member/wmk69') wmk69
+					| --
+					a(href='http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web') Font License

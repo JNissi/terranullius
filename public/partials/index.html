@@ -1,32 +1,12 @@
+
 <div class="index mainmenu">
-	<h1>Welcome to Terranullius!</h1>
-	<div google google-element-id="signinButton" ng-show="user.initDone">
-		<div class="login menubuttons" ng-hide="user.loggedIn">
-			<span id="signinButton"></span>
-		</div>
-		<div class="menubuttons" ng-show="user.loggedIn">
-			<button ng-click="openGameSelection()">
-				Games
-			</button>
-			<button ng-click="openAccountMenu()">
-				AccountSettings
-			</button>
-			<p>
-				<small>
-					The font is
-					<a href="http://openfontlibrary.org/en/font/modernantiqua">
-						Modern Antiqua Book
-					</a>
-					by
-					<a href="http://openfontlibrary.org/en/member/wmk69">
-						wmk69
-					</a>
-					--
-					<a href="http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web">
-						Font License
-					</a>
-				</small>
-			</p>
-		</div>
-	</div>
+  <h1>Welcome to Terranullius!</h1>
+  <div google-element-id="signinButton" ng-show="user.initDone" google="google">
+    <div ng-hide="user.loggedIn" class="login menubuttons"><span id="signinButton"></span></div>
+    <div ng-show="user.loggedIn" class="menubuttons">
+      <button ng-click="openGameSelection()">Games</button>
+      <button ng-click="openAccountMenu()">AccountSettings</button>
+      <p><small>The font is<a href="http://openfontlibrary.org/en/font/modernantiqua">Modern Antiqua Book</a>by<a href="http://openfontlibrary.org/en/member/wmk69">wmk69</a>--<a href="http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web">Font License</a></small></p>
+    </div>
+  </div>
 </div>
